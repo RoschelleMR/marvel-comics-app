@@ -1,8 +1,11 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
+
 import CryptoJS from 'crypto-js';
+import ComicCard from './ComicCard';
 
 import './App.css';
+import SearchIcon from './search.svg'
 
 
 
@@ -13,7 +16,7 @@ const getAPI = (title) => {
   let toBeHashed = ts+privateKey+apiKey
   let hash = CryptoJS.MD5(toBeHashed)
 
-  const API_URL = `https://gateway.marvel.com/v1/public/comics?title=${title}&ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=100`;
+  const API_URL = `https://gateway.marvel.com/v1/public/comics?title=${title}&ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=25`;
   return API_URL
 
 }
@@ -22,6 +25,7 @@ const getAPI = (title) => {
 function App() {
 
   const [comics, setComics] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
 
 
   const searchComics = async (title) => {
@@ -34,10 +38,9 @@ function App() {
   }
 
   useEffect(() => {
-    searchComics('Hulk');
+    searchComics('Spider-Man');
   }, [])
 
-  console.log(comics)
   
   //example comic object for reference
   let comic1 = {
@@ -160,23 +163,49 @@ function App() {
     }
 }
 
+
+
   return (
     <div className="App">
       <header className="App-header">
         Marvel Comictopia
       </header>
 
-      <div className="search">
+      <div className="search-container">
+
         <input
           type="text"
           placeholder="Search for a comic"
-          value="Hulk" //temp
+          value= {searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
+
+        <div className="search-image">
+          <img 
+            src={SearchIcon}
+            alt="Search Icon"
+            onClick={() => {searchComics(searchTerm)}}
+          />
+        </div>
+
       </div>
 
-      <div className="container">
+      {
+        comics.length !== 0
 
-      </div>
+        ?(
+          <div className="main-container">
+            {comics.map((comic) => (
+              <ComicCard comic={comic} />
+            ))}
+        
+          </div>
+        )
+
+        :(
+          <h3>Comic Not Found</h3>
+        )
+      }
 
     </div>
   );
