@@ -2,7 +2,8 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 
 import CryptoJS from 'crypto-js';
-import ComicCard from './ComicCard';
+import ComicCard from './components/ComicCard';
+import AppHeader from './components/AppHeader';
 
 import './App.css';
 import SearchIcon from './search.svg'
@@ -16,7 +17,7 @@ const getAPI = (title) => {
   let toBeHashed = ts+privateKey+apiKey
   let hash = CryptoJS.MD5(toBeHashed)
 
-  const API_URL = `https://gateway.marvel.com/v1/public/comics?title=${title}&ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=25`;
+  const API_URL = `https://gateway.marvel.com/v1/public/comics?title=${title}&ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=50`;
   return API_URL
 
 }
@@ -34,11 +35,14 @@ function App() {
     const data = await response.json();
 
     let comicObjects = data.data.results
+
+    console.log(comicObjects)
+
     setComics(comicObjects);
   }
 
   useEffect(() => {
-    searchComics('Spider-Man');
+    searchComics('Blade');
   }, [])
 
   
@@ -167,9 +171,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        Marvel Comictopia
-      </header>
+      {/* use header component */}
+      
+      <AppHeader/>
 
       <div className="search-container">
 
@@ -182,6 +186,7 @@ function App() {
 
         <div className="search-image">
           <img 
+            className='search-icon'
             src={SearchIcon}
             alt="Search Icon"
             onClick={() => {searchComics(searchTerm)}}
