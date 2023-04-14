@@ -1,38 +1,170 @@
-/* .App {
-  text-align: center;
+
+*{
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
+body{
+  background: whitesmoke;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* .App{
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+} */
+
+@font-face {
+  font-family: "marvel";   /*Can be any text*/
+  src: local("Marvel-Regular"),
+    url("./fonts/Marvel-Regular.ttf") format("truetype");
+}
+
+.App-header{
+  font-family: 'marvel';
+  text-align: center;
+  /* font-size: 2rem; */
+  font-weight: 2rem;
+  padding: 15px;
+}
+
+.App-header h3{
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 80px;
+}
+
+
+.search-container{
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+
+  margin-bottom: 30px;
+
+}
+
+.search-icon:hover{
+  cursor: pointer;
+}
+
+
+.main-container{
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 15px;
+
+  
+
+  justify-content: center;
+  align-items: baseline;
+}
+
+.comicItem{
+  display: flex;
+  flex-direction: column;
+
+  height: 500px;
+  width: 300px;
+  margin: 20px;
+
+  box-shadow: 5px 5px 20px black;
+
+  overflow: hidden;
+  position: relative;
+
+}
+
+.comicItem img{
+
+  width: 300px;
+  height: 500px;
+
+  transition: .5s;
+  
+}
+
+.comic-content{
+  height: 70px;
+  width: 300px;
+  padding: 12px;
+
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  transition: .5s;
+  
+  background: rgb(27,27,27,.5);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.card-header{
+  margin-bottom: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+.comic-content p, .seeMore a{
+  visibility: hidden;
+  opacity: 0;
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+/* HOVER EFFECTS */
+
+.comicItem:hover{
+  cursor: pointer;
+}
+
+.comicItem:hover .comic-content{
+  height: 220px;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.829);
+
+  
+}
+
+.comicItem:hover .comic-content p{
+  visibility: visible;
+  opacity: 1;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  margin-bottom: 10px;
+}
+
+.comicItem:hover img{
+  transform: scale(1.05);
+}
+
+.comicItem:hover .seeMore a{
+  color: white;
+  text-decoration: none;
+  font-weight: bolder;
+
+  visibility: visible;
+  opacity: 1;
+}
