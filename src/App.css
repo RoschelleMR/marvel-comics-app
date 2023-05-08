@@ -12,7 +12,7 @@
 } */
 
 body{
-  background: whitesmoke;
+  background: #1F1F1F;
 }
 
 /* .App{
@@ -23,7 +23,7 @@ body{
 } */
 
 @font-face {
-  font-family: "marvel";   /*Can be any text*/
+  font-family: "marvel";
   src: local("Marvel-Regular"),
     url("./fonts/Marvel-Regular.ttf") format("truetype");
 }
@@ -31,17 +31,21 @@ body{
 .App-header{
   font-family: 'marvel';
   text-align: center;
-  /* font-size: 2rem; */
-  font-weight: 2rem;
-  padding: 15px;
+  background-color: #E23636;
+  color: white;
+
+  padding: 20px;
+
+  margin-bottom: 8px;
 }
 
 .App-header h3{
   text-transform: uppercase;
-  letter-spacing: 3px;
-  font-size: 80px;
+  letter-spacing: 4px;
+  font-size: 60px;
 }
 
+/* Search Bar */
 
 .search-container{
 
@@ -49,25 +53,62 @@ body{
   flex-direction: row;
 
   justify-content: center;
+  align-items: center;
 
-  margin-bottom: 30px;
+  padding: 0 80px;
 
 }
+
+.search-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+
+  width: 500px;
+  margin-bottom: 30px;
+  padding: 5px;
+
+  background: transparent;
+  border: none;
+  border-bottom: 5px solid white;
+}
+
+.search-container input{
+  background: transparent;
+  border: none;
+  color: white;
+
+  text-align:left;
+  padding-top: 22px;
+
+  width: 100%;
+  font-size: 18px;
+}
+
+.search-icon{
+  color: white;
+  padding-top: 20px;
+  font-size: 25px;
+}
+
 
 .search-icon:hover{
   cursor: pointer;
 }
 
+/* End of Search bar */
 
 .main-container{
   display: flex;
   flex-wrap: wrap;
   column-gap: 15px;
+  padding: 0 55px;
 
   
 
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
 }
 
 .comicItem{

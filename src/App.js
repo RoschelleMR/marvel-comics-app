@@ -6,7 +6,8 @@ import ComicCard from './components/ComicCard';
 import AppHeader from './components/AppHeader';
 
 import './App.css';
-import SearchIcon from './search.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -171,29 +172,48 @@ function App() {
 
   return (
     <div className="App">
-      {/* use header component */}
-      
+     
       <AppHeader/>
 
       <div className="search-container">
 
-        <input
-          type="text"
-          placeholder="Search for a comic"
-          value= {searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className="search-box">
 
-        <div className="search-image">
-          <img 
+          <FontAwesomeIcon 
             className='search-icon'
-            src={SearchIcon}
+            icon={faSearch}
             alt="Search Icon"
-            onClick={() => {searchComics(searchTerm)}}
+            onClick={() => {searchComics(searchTerm)}} 
           />
-        </div>
 
+          <input
+            type="text"
+            placeholder="Search for a comic"
+            value= {searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter'){
+                searchComics(searchTerm)
+              }
+              
+            }}
+          />
+
+          
+
+          {/* <div className="search-image">
+            <img 
+              className='search-icon'
+              src={SearchIcon}
+              alt="Search Icon"
+              onClick={() => {searchComics(searchTerm)}}
+            />
+          </div> */}
+
+        </div>
       </div>
+
+        
 
       {
         comics.length !== 0
