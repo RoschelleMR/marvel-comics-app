@@ -4,12 +4,17 @@ import { useEffect, useState } from 'react';
 import CryptoJS from 'crypto-js';
 import ComicCard from './components/ComicCard';
 import AppHeader from './components/AppHeader';
+import Modal from './components/Modal';
 
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-
+// ----------------------------NOTES ---------------------------
+// Main-Notes: 
+// Side-Note: 1. Maybe make the searching for specific titles more refined
+//            2. Implement autocomplete on searhing
+// ------------------------END OF NOTES--------------------------
 
 const getAPI = (title) => {
   let apiKey = "7b45859751cc84dd3b3ac7739c05a138"
@@ -18,7 +23,7 @@ const getAPI = (title) => {
   let toBeHashed = ts+privateKey+apiKey
   let hash = CryptoJS.MD5(toBeHashed)
 
-  const API_URL = `https://gateway.marvel.com/v1/public/comics?title=${title}&ts=${ts}&apikey=${apiKey}&hash=${hash}&limit=50`;
+  const API_URL = `https://gateway.marvel.com/v1/public/comics?noVariants=true&title=${title}&ts=${ts}&orderBy=-focDate&apikey=${apiKey}&hash=${hash}&limit=50`;
   return API_URL
 
 }
@@ -26,8 +31,10 @@ const getAPI = (title) => {
 
 function App() {
 
-  const [comics, setComics] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
+  const [comics, setComics] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selected, setSelected] = useState(null);
+  
 
 
   const searchComics = async (title) => {
@@ -46,6 +53,7 @@ function App() {
     searchComics('Blade');
   }, [])
 
+  
   
   //example comic object for reference
   let comic1 = {
@@ -174,6 +182,7 @@ function App() {
     <div className="App">
      
       <AppHeader/>
+      <Modal selected={selected} />
 
       <div className="search-container">
 
@@ -198,18 +207,6 @@ function App() {
               
             }}
           />
-
-          
-
-          {/* <div className="search-image">
-            <img 
-              className='search-icon'
-              src={SearchIcon}
-              alt="Search Icon"
-              onClick={() => {searchComics(searchTerm)}}
-            />
-          </div> */}
-
         </div>
       </div>
 
@@ -221,7 +218,10 @@ function App() {
         ?(
           <div className="main-container">
             {comics.map((comic) => (
-              <ComicCard comic={comic} />
+              <div onClick={() => {setSelected(comic.id)}}>
+                <ComicCard comic={comic}/>
+              </div>
+              
             ))}
         
           </div>

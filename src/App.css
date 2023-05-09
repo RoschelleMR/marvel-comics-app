@@ -160,7 +160,17 @@ body{
   
 }
 
+/*  */
+/* MODAL */
+/*  */
 
+/* .modal_container{
+  display: block;
+  position: fixed;
+  background-color: white;
+  z-index: 3;
+  overflow: hidden;
+} */
 
 
 
