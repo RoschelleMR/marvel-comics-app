@@ -3,6 +3,8 @@ import React from "react";
 import CryptoJS from 'crypto-js';
 import { useEffect, useState } from 'react';
 
+import '../assets/css/Modal.css'
+
 // ----------------------------NOTES ---------------------------
 // Main-Notes: 1. To implement displaying the info in the modal
 //             2. Need to style Modal
@@ -21,40 +23,115 @@ const getAPI = (id) => {
   
   }
 
-const Modal = ({selected}) => {
+const Modal = ({updateProps, modalState, id}) => {
+
+    let poster
+    let new_post_array
+    let pos_value
+    let dates
+    let published
+
+    console.log(modalState, id)
 
     const [comic, setComic] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const findComic = async (selected) => {
-
-        const response = await fetch(`${getAPI(selected)}`);
-        const data = await response.json();
-    
-        let comicObjects = data.data.results
-    
-        console.log(comicObjects)
-    
-        setComic(comicObjects);
-      }
-
-    
     useEffect(() => {
 
-        if (selected != null){
-            findComic(selected);   
+        if (id != null && modalState===true){
+            findComic(id);
         }
         
-      }, [selected]);
+      }, [id, modalState]);
+    
+      
+    
+
+    const findComic = async (id) => {
+
+        setLoading(true);
+
+        try {
+            const response = await fetch(`${getAPI(id)}`);
+            const data = await response.json();
+        
+            let comicObjects = data.data.results[0]
+        
+            setComic(comicObjects);
+            setLoading(false);
+        }
+        catch (err) {
+            setLoading(false);
+          }  
+      }
+
+    const closeModal = () => {
+
+        updateProps(false);
+        setComic([])
+        
+    }
+
+
+      
+
+    if(modalState === true){
+
+        if (Object.keys(comic).length > 0){
+
+            new_post_array = comic.images
+            pos_value = new_post_array.at(0)
+    
+            dates = comic.dates
+            published = new Date(dates.at(0).date)
+            console.log(published)
+    
+            // setting up poster img src
+            if (new_post_array.length !== 0){
+                poster = `${pos_value.path}.${pos_value.extension}`;
+            }
+            else{
+                
+
+                poster = "https://via.placeholder.com/800"
+            }
+        }
+
+
+        document.body.classList.add('active-modal')
+
+
+        
+    }
+    else{
+        document.body.classList.remove('active-modal')
+    }
+
+      console.log('logging comic',comic)
 
       
     return(
+        <>
+            {loading === false && modalState && (comic.length !== 0) && (
+                <div className="modal">
+                    <div className="overlay" onClick={() => closeModal()}></div>
+                    <div className="modal-content">
+                        <div className="poster-box">
+                            <img src= {poster} alt={comic.title} />
+                        </div>
+                        <div className="comicInfo-box">
+                            <div className="header">
+                                <h2>{comic.title}</h2>
+                            </div>
+                            <div className="desc">
+                                <p>{comic.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
-        <div className="modal_container">
-            <div className="overlay"></div>
-            <div className="modal-content">
-                <p>{selected}</p>
-            </div>
-        </div>
+        </>
 
     )
 

@@ -6,12 +6,12 @@ import ComicCard from './components/ComicCard';
 import AppHeader from './components/AppHeader';
 import Modal from './components/Modal';
 
-import './App.css';
+import './assets/css/App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 // ----------------------------NOTES ---------------------------
-// Main-Notes: 
+// Main-Notes: 1. More comics as user scrolls down
 // Side-Note: 1. Maybe make the searching for specific titles more refined
 //            2. Implement autocomplete on searhing
 // ------------------------END OF NOTES--------------------------
@@ -34,6 +34,8 @@ function App() {
   const [comics, setComics] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selected, setSelected] = useState(null);
+
+  const [modal, setModal] = useState(false);
   
 
 
@@ -50,10 +52,23 @@ function App() {
   }
 
   useEffect(() => {
-    searchComics('Blade');
+    searchComics('Captain America');
   }, [])
 
-  
+  const toggleModal = () => {
+
+    setModal(!modal);
+    
+  };
+
+  // receives value from Modal component to change
+  // value of App.js modal state
+  const updateProps = (newValue) => {
+    setModal(newValue);
+    setSelected(null);
+
+    
+  };
   
   //example comic object for reference
   let comic1 = {
@@ -177,12 +192,11 @@ function App() {
 }
 
 
-
   return (
     <div className="App">
      
       <AppHeader/>
-      <Modal selected={selected} />
+      <Modal updateProps={updateProps} modalState= {modal} id={selected} />
 
       <div className="search-container">
 
@@ -218,7 +232,7 @@ function App() {
         ?(
           <div className="main-container">
             {comics.map((comic) => (
-              <div onClick={() => {setSelected(comic.id)}}>
+              <div onClick={() => {setSelected(comic.id); toggleModal(); }}>
                 <ComicCard comic={comic}/>
               </div>
               
