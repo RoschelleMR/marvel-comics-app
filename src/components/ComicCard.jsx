@@ -1,5 +1,11 @@
 import React from 'react';
 
+
+// ----------------------------NOTES ---------------------------
+// Main-Notes: 1. Needs to be a bit more responsive to smaller screens
+//             2. Needs to use routing for the 'See More' link to the Modal
+// ------------------------END OF NOTES--------------------------
+
 const ComicCard = ({comic}) =>{
 
 
@@ -42,6 +48,7 @@ const ComicCard = ({comic}) =>{
                 }
 
                 <div className="seeMore">
+                    {/* Note: To use React Router */}
                     <a href="#">See More</a>
                 </div>
                 

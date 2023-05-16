@@ -25,7 +25,7 @@ body{
 @font-face {
   font-family: "marvel";
   src: local("Marvel-Regular"),
-    url("./fonts/Marvel-Regular.ttf") format("truetype");
+    url("../fonts/Marvel-Regular.ttf") format("truetype");
 }
 
 .App-header{
@@ -160,7 +160,7 @@ body{
   
 }
 
-/*  */
+
 /* MODAL */
 /*  */
 
