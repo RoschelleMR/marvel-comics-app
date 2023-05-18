@@ -6,8 +6,7 @@ import { useEffect, useState } from 'react';
 import '../assets/css/Modal.css'
 
 // ----------------------------NOTES ---------------------------
-// Main-Notes: 1. To implement displaying the info in the modal
-//             2. Need to style Modal
+// Main-Notes: 1. Add icon to close the modal
 // ------------------------END OF NOTES--------------------------
 
 const getAPI = (id) => {
@@ -30,6 +29,8 @@ const Modal = ({updateProps, modalState, id}) => {
     let pos_value
     let dates
     let published
+    let characterList = []
+    let creatorList = []
 
     console.log(modalState, id)
 
@@ -83,8 +84,25 @@ const Modal = ({updateProps, modalState, id}) => {
             pos_value = new_post_array.at(0)
     
             dates = comic.dates
-            published = new Date(dates.at(0).date)
-            console.log(published)
+            let date = new Date(dates.at(0).date)
+
+
+            published = date.toLocaleDateString("en", {
+                year: "numeric",
+                day: "2-digit",
+                month: "long",
+              });
+
+            let tempCharList = comic.characters.items
+            let tempCreatorList = comic.creators.items
+
+            tempCharList.forEach(character => {
+                characterList.push(character.name)
+            });
+
+            tempCreatorList.forEach(creator => {
+                creatorList.push(creator.name)
+            });
     
             // setting up poster img src
             if (new_post_array.length !== 0){
@@ -123,9 +141,43 @@ const Modal = ({updateProps, modalState, id}) => {
                             <div className="header">
                                 <h2>{comic.title}</h2>
                             </div>
-                            <div className="desc">
-                                <p>{comic.description}</p>
+                            <div className="published">
+                                <h3>Published:</h3>
+                                <p>{published}</p>
                             </div>
+
+                            {comic.description !== null ?
+
+                                <div className="desc">
+                                    <p>{comic.description}</p>
+                                </div>
+
+                                :null
+                            }
+
+                            
+                            {characterList.length !== 0 ?
+
+                                <div className="characters">
+                                    <h3>Characters:</h3>
+                                    <p>{characterList.join(", ")}</p>
+                                    
+                                </div>
+
+                                :null
+                            }
+                            
+                            {creatorList.length !== 0 ?
+
+                                <div className="creators">
+                                    <h3>Creators:</h3>
+                                    <p>{creatorList.join(", ")}</p>
+                                    
+                                </div>
+
+                                :null
+                            }
+
                         </div>
                     </div>
                 </div>
