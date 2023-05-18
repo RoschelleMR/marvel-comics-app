@@ -17,7 +17,7 @@ body.active-modal {
 }
 
 .overlay{
-    background-color: rgba(17, 17, 17, 0.626);
+    background-color: rgba(17, 17, 17, 0.663);
 }
 
 
@@ -26,7 +26,7 @@ body.active-modal {
     justify-content: center;
     align-items: center;
     
-    max-height: 57em;
+    /* max-height: 57em; */
     width: 70%; 
     /* width: 100%; */
 }
@@ -34,14 +34,16 @@ body.active-modal {
 .modal-content {
     display: flex;
     background-color: rgba(0, 0, 0, 0.923);
+    border: none;
+    border-radius: 7px;
     color: white;
     opacity: 96%;
 
     z-index: 6;
-    /* max-width: 800px; */
+    max-height: 80%;
     min-width: 70%;
 
-    padding: 25px;
+    padding: 22px;
     column-gap: 15px;
 
 }
@@ -54,7 +56,7 @@ body.active-modal {
 .poster-box img{
 
     max-width: 300px;
-    height: auto;
+    max-height: 100%;
   
     transition: .5s;
     
@@ -89,4 +91,19 @@ body.active-modal {
   .desc p{
     font-weight: 400;
     margin: 5px 0 ;
+  }
+
+  /*  */
+  /*  */
+  /* ICON */
+  /*  */
+  /*  */
+
+  .xmark-icon{
+    order: 3;
+    font-size: 1.75em;
+  }
+
+  .xmark-icon:hover{
+    cursor: pointer;
   }

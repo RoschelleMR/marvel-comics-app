@@ -3,7 +3,9 @@ import React from "react";
 import CryptoJS from 'crypto-js';
 import { useEffect, useState } from 'react';
 
-import '../assets/css/Modal.css'
+import '../assets/css/Modal.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------NOTES ---------------------------
 // Main-Notes: 1. Add icon to close the modal
@@ -134,6 +136,14 @@ const Modal = ({updateProps, modalState, id}) => {
                 <div className="modal">
                     <div className="overlay" onClick={() => closeModal()}></div>
                     <div className="modal-content">
+                        
+                        <FontAwesomeIcon 
+                            className='xmark-icon'
+                            icon={faXmark} 
+                            alt="Xmark Icon"
+                            onClick={() => {closeModal()}} 
+                        />
+
                         <div className="poster-box">
                             <img src= {poster} alt={comic.title} />
                         </div>
