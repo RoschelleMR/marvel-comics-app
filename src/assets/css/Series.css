@@ -1,0 +1,33 @@
+.top{
+    background-color: rgb(11, 11, 11);
+    color: white;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: row;
+    column-gap: 18px;
+
+    padding: 50px;
+}
+
+.top-image{
+    display: flex;
+}
+
+.top img{
+    max-width: 400px;
+    height: auto;
+}
+
+.top-info{
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
+
+.top-info h3{
+    font-weight: 500;
+}
+
+.top-info p{
+    font-weight: 250;
+}

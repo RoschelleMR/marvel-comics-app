@@ -1,4 +1,5 @@
 import React from "react";
+import {Link, Route, Routes} from 'react-router-dom';
 
 import CryptoJS from 'crypto-js';
 import { useEffect, useState } from 'react';
@@ -6,9 +7,11 @@ import { useEffect, useState } from 'react';
 import '../assets/css/Modal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import Series from "../pages/Series";
 
 // ----------------------------NOTES ---------------------------
-// Main-Notes: 1. Add icon to close the modal
+// Main-Notes: 1. Implement the ability to go to the series of the comic
 // ------------------------END OF NOTES--------------------------
 
 const getAPI = (id) => {
@@ -31,10 +34,11 @@ const Modal = ({updateProps, modalState, id}) => {
     let pos_value
     let dates
     let published
+    let series
     let characterList = []
     let creatorList = []
 
-    console.log(modalState, id)
+    // console.log(modalState, id)
 
     const [comic, setComic] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -71,8 +75,8 @@ const Modal = ({updateProps, modalState, id}) => {
     const closeModal = () => {
 
         updateProps(false);
-        setComic([])
-        
+        setComic([]);
+        document.body.classList.remove('active-modal');
     }
 
 
@@ -105,6 +109,12 @@ const Modal = ({updateProps, modalState, id}) => {
             tempCreatorList.forEach(creator => {
                 creatorList.push(creator.name)
             });
+
+            // getting series id
+            let seriesLink = comic.series.resourceURI
+            series = parseInt(seriesLink.replace('http://gateway.marvel.com/v1/public/series/','')) 
+            console.log(series)
+
     
             // setting up poster img src
             if (new_post_array.length !== 0){
@@ -127,11 +137,14 @@ const Modal = ({updateProps, modalState, id}) => {
         document.body.classList.remove('active-modal')
     }
 
-      console.log('logging comic',comic)
+    //   console.log('logging comic',comic)
 
       
     return(
         <>
+
+            
+
             {loading === false && modalState && (comic.length !== 0) && (
                 <div className="modal">
                     <div className="overlay" onClick={() => closeModal()}></div>
@@ -143,6 +156,21 @@ const Modal = ({updateProps, modalState, id}) => {
                             alt="Xmark Icon"
                             onClick={() => {closeModal()}} 
                         />
+
+                        <div className="series-box">
+                            <Link 
+                                to={'/series/' + series}
+                                state={{ seriesID: series }}
+                                onClick={() => closeModal()}
+                            >Go to Series</Link>
+
+                            <FontAwesomeIcon 
+                                className='right-arrow-icon'
+                                icon={faArrowRight} 
+                                alt="Right Arrow Icon"
+                            />
+                        </div>
+                        
 
                         <div className="poster-box">
                             <img src= {poster} alt={comic.title} />
