@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import CryptoJS from 'crypto-js';
 
@@ -27,6 +28,11 @@ function Home() {
 
     const [comics, setComics] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [error, setError] = useState(false);
+
+    const [searchParams, setSearchParam] = useSearchParams({title: 'Captain America'});
+    const comictitle = searchParams.get('title');
+
     const [selected, setSelected] = useState(null);
 
     const [modal, setModal] = useState(false);
@@ -35,19 +41,27 @@ function Home() {
 
     const searchComics = async (title) => {
 
-        const response = await fetch(`${getAPI(title)}`);
-        const data = await response.json();
+        try{
+            const response = await fetch(`${getAPI(title)}`);
+            const data = await response.json();
 
-        let comicObjects = data.data.results
+            let comicObjects = data.data.results
 
-        console.log(comicObjects)
+            console.log(comicObjects)
 
-        setComics(comicObjects);
+            setComics(comicObjects);
+
+            setError(false);
+        }
+        catch(err){
+            setError(true)
+        }
+        
     }
 
     useEffect(() => {
-        searchComics('Captain America');
-    }, [])
+        searchComics(comictitle);
+    }, [comictitle])
 
     const toggleModal = () => {
 
@@ -85,10 +99,12 @@ function Home() {
                     type="text"
                     placeholder="Search for a comic"
                     value= {searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => {setSearchTerm(e.target.value)}}
                     onKeyDown={(e) => {
                     if (e.key === 'Enter'){
+                        setSearchParam({title: searchTerm});
                         searchComics(searchTerm)
+                        
                     }
                     
                     }}
@@ -99,7 +115,7 @@ function Home() {
 
 
             {
-                comics.length !== 0
+                comics.length !== 0 && error===false
 
                 ?(
                 <div className="main-container">
