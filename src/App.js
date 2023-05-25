@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Series from './pages/Series'
 
 import './assets/css/App.css';
+import Comics from './pages/Comics';
 
 
 // ----------------------------NOTES ---------------------------
@@ -29,7 +30,11 @@ function App() {
       
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/comics/:title" element={<Comics />}/>
         <Route path="/series/:id" element={<Series/>}/>
+
+        {/* 404 page */}
+        {/* <Route path="*" element={<NotFound/>}/> */}
       </Routes>
     </div>
   );

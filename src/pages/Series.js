@@ -16,7 +16,7 @@ const getComicsAPI = (seriesID) => {
     let toBeHashed = ts+privateKey+apiKey
     let hash = CryptoJS.MD5(toBeHashed)
   
-    const API_URL = `https://gateway.marvel.com/v1/public/series/${seriesID}/comics?noVariants=true&limit=100&ts=${ts}&apikey=${apiKey}&hash=${hash}`;
+    const API_URL = `https://gateway.marvel.com/v1/public/series/${seriesID}/comics?noVariants=true&orderBy=-modified&limit=100&ts=${ts}&apikey=${apiKey}&hash=${hash}`;
     return API_URL
 }
 

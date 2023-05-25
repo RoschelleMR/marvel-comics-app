@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import CryptoJS from 'crypto-js';
 
@@ -11,28 +11,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 
-const getAPI = () => {
+const getAPI = (title) => {
     let apiKey = "7b45859751cc84dd3b3ac7739c05a138"
     let privateKey = "f85c0a29b5716efc5b61124f138a423330dd23a2"
     let ts = Date.now().toString();
     let toBeHashed = ts+privateKey+apiKey
     let hash = CryptoJS.MD5(toBeHashed)
   
-    const API_URL = `https://gateway.marvel.com/v1/public/comics?noVariants=true&ts=${ts}&orderBy=-focDate&apikey=${apiKey}&hash=${hash}&limit=100`;
+    const API_URL = `https://gateway.marvel.com/v1/public/comics?noVariants=true&title=${title}&ts=${ts}&orderBy=-focDate&apikey=${apiKey}&hash=${hash}&limit=100`;
     return API_URL
   
   }
 
 
-function Home() {
 
+function Comics() {
+
+    let { title } = useParams();
+    let comicTitle = title; 
+
+    const navigate = useNavigate();
+    
     const [comics, setComics] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [error, setError] = useState(false);
 
-    const navigate = useNavigate();
-
-    // const [searchParams, setSearchParam] = useSearchParams({title: 'Captain America'});
+    // const [searchParams, setSearchParam] = useSearchParams({title: ''});
     // const comictitle = searchParams.get('title');
 
     const [selected, setSelected] = useState(null);
@@ -41,10 +45,10 @@ function Home() {
     
 
 
-    const searchComics = async () => {
+    const searchComics = async (title) => {
 
         try{
-            const response = await fetch(`${getAPI()}`);
+            const response = await fetch(`${getAPI(title)}`);
             const data = await response.json();
 
             let comicObjects = data.data.results
@@ -62,8 +66,10 @@ function Home() {
     }
 
     useEffect(() => {
-        searchComics();
-    }, [])
+        
+        searchComics(comicTitle)      
+
+    }, [comicTitle])
 
     const toggleModal = () => {
 
@@ -80,14 +86,9 @@ function Home() {
     
     };
 
-
     const gotoComic = () =>{
         navigate('/comics/' + searchTerm)
-    }
-
-
-
-
+    };
 
     return(
         <>
@@ -112,7 +113,6 @@ function Home() {
                     if (e.key === 'Enter'){
                         gotoComic()
                     }
-                    
                     }}
                 />
                 </div>
@@ -142,6 +142,7 @@ function Home() {
 
         </>
     )
+
 }
 
-export default Home
+export default Comics
