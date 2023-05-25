@@ -3,7 +3,6 @@ import React from 'react';
 
 // ----------------------------NOTES ---------------------------
 // Main-Notes: 1. Needs to be a bit more responsive to smaller screens
-//             2. Needs to use routing for the 'See More' link to the Modal
 // ------------------------END OF NOTES--------------------------
 
 const ComicCard = ({comic}) =>{
@@ -14,8 +13,6 @@ const ComicCard = ({comic}) =>{
     let pos_value = new_post_array[0]
 
     if (new_post_array.length < 1){
-        // poster = Object.values(comic.thumbnail).join(".");
-        // poster = require('./images/image-not-available.jpg');
         poster = "https://via.placeholder.com/800"
     }
     else{
@@ -27,9 +24,9 @@ const ComicCard = ({comic}) =>{
 
     return(
         <div className="comicItem">
-            <div>
-                <img src= {poster} alt={comic.title} />
-            </div>
+            
+            <img src= {poster} alt={comic.title} />
+            
 
             <div className="comic-content">
 
@@ -48,8 +45,7 @@ const ComicCard = ({comic}) =>{
                 }
 
                 <div className="seeMore">
-                    {/* Note: To use React Router */}
-                    <a href="#">See More</a>
+                    <p>See More</p>
                 </div>
                 
 
