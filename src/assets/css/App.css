@@ -4,23 +4,11 @@
   padding: 0;
 }
 
-/* body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-} */
 
 body{
   background: #1F1F1F;
 }
 
-/* .App{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
 
 @font-face {
   font-family: "marvel";
@@ -36,7 +24,6 @@ body{
 
   padding: 20px;
 
-  margin-bottom: 8px;
 }
 
 .App-header h3{
@@ -115,7 +102,7 @@ body{
   display: flex;
   flex-direction: column;
 
-  height: 500px;
+  height: 450px;
   width: 300px;
   margin: 20px;
 
@@ -128,15 +115,19 @@ body{
 
 .comicItem img{
 
-  width: 300px;
-  height: 500px;
+  max-width: 100%;
+  max-height: 100%;
+
+  height: 450px;
+  
+  object-fit: fill;
 
   transition: .5s;
   
 }
 
 .comic-content{
-  height: 70px;
+  height: 65px;
   width: 300px;
   padding: 12px;
 
@@ -153,30 +144,12 @@ body{
   margin-bottom: 5px;
 }
 
-.comic-content p, .seeMore a{
+.comic-content p{
   visibility: hidden;
   opacity: 0;
 
   
 }
-
-
-/* MODAL */
-/*  */
-
-/* .modal_container{
-  display: block;
-  position: fixed;
-  background-color: white;
-  z-index: 3;
-  overflow: hidden;
-} */
-
-
-
-
-
-
 
 
 
@@ -187,11 +160,11 @@ body{
 }
 
 .comicItem:hover .comic-content{
-  height: 220px;
+  height: 180px;
   bottom: 0;
   background: rgba(0, 0, 0, 0.829);
 
-  
+  cursor:default;
 }
 
 .comicItem:hover .comic-content p{
@@ -199,7 +172,7 @@ body{
   opacity: 1;
 
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -211,11 +184,15 @@ body{
   transform: scale(1.05);
 }
 
-.comicItem:hover .seeMore a{
+.comicItem:hover .seeMore p{
   color: white;
-  text-decoration: none;
   font-weight: bolder;
 
   visibility: visible;
   opacity: 1;
+}
+
+.seeMore p:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }

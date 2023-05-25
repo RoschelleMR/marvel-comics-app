@@ -43,7 +43,7 @@ body.active-modal {
     max-height: 80%;
     min-width: 70%;
 
-    padding: 22px;
+    padding: 25px;
     column-gap: 15px;
 
 }
@@ -91,6 +91,15 @@ body.active-modal {
   .desc p{
     font-weight: 400;
     margin: 5px 0 ;
+  }
+
+  .series-box{
+    order: 3;
+    align-self:flex-end;
+  }
+
+  .series-box:hover{
+    color: red;
   }
 
   /*  */
