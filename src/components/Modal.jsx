@@ -158,7 +158,8 @@ const Modal = ({updateProps, modalState, id}) => {
                         />
 
                         <div className="series-box">
-                            <Link 
+                            <Link
+                                className="series-link"
                                 to={'/series/' + series}
                                 state={{ seriesID: series }}
                                 onClick={() => closeModal()}
